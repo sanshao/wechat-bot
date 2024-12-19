@@ -272,6 +272,31 @@ const parseTokenData = (tokenData) => {
   );
   arr.push("\n");
 
+  arr.push('====== 1M ======');
+  arr.push(`Volumn: ${formatNumber(tokenData.volume_1m)} `);
+  arr.push(`Buy: ${tokenData.buys_1m}/${formatNumber(tokenData.buy_volume_1m)} `);
+  arr.push(`Sell: ${tokenData.sells_1m}/${formatNumber(tokenData.sell_volume_1m)}`);
+  arr.push(`Net Buy: ${tokenData.sells_1m}/${formatNumber(tokenData.sell_volume_1m)}`);
+
+  arr.push('====== 5M ======');
+  arr.push(`Volumn: ${formatNumber(tokenData.volume_5m)} `);
+  arr.push(`Buy: ${tokenData.buys_5m}/${formatNumber(tokenData.buy_volume_5m)} `);
+  arr.push(`Sell: ${tokenData.sells_5m}/${formatNumber(tokenData.sell_volume_5m)}`);
+  arr.push(`Net Buy: ${tokenData.sells_5m}/${formatNumber(tokenData.sell_volume_5m)}`);
+
+  arr.push('====== 1H ======');
+  arr.push(`Volumn: ${formatNumber(tokenData.volume_1h)} `);
+  arr.push(`Buy: ${tokenData.buys_1h}/${formatNumber(tokenData.buy_volume_1h)} `);
+  arr.push(`Sell: ${tokenData.sells_1h}/${formatNumber(tokenData.sell_volume_1h)}`);
+  arr.push(`Net Buy: ${tokenData.sells_1h}/${formatNumber(tokenData.sell_volume_1h)}`);
+
+  arr.push('====== 24H ======');
+  arr.push(`Volumn: ${formatNumber(tokenData.volume_24h)} `);
+  arr.push(`Buy: ${tokenData.buys_24h}/${formatNumber(tokenData.buy_volume_24h)} `);
+  arr.push(`Sell: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`);
+  arr.push(`Net Buy: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`);
+
+  arr.push("\n");
   arr.push(`====== ${dayjs().format("YYYY-MM-DD HH:mm:ss")} ======`);
 
   return arr.join("\n");
