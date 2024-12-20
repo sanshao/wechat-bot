@@ -350,7 +350,6 @@ const percent100 = (price, basePrice) => {
   }
   return `${new BigNumber(price)
     .minus(basePrice)
-    .abs()
     .dividedBy(basePrice)
     .times(100)
     .toFixed(2)}%`;
