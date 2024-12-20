@@ -6,14 +6,14 @@ import BigNumber from "bignumber.js";
 import puppeteer from "puppeteer";
 import https from "https";
 // import db from './db'
-import utc from 'dayjs/plugin/utc.js'
-import timezone from 'dayjs/plugin/timezone.js' 
+import utc from "dayjs/plugin/utc.js";
+import timezone from "dayjs/plugin/timezone.js";
 
-dayjs.extend(utc)
-dayjs.extend(timezone)
-dayjs.tz.setDefault('Asia/Shanghai')
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault("Asia/Shanghai");
 
-console.log(dayjs().tz('Asia/Shanghai').format('YYYY-MM-DD HH:mm:ss'))
+console.log(dayjs().tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss"));
 
 // Solana连接
 const connection = new Connection(
@@ -243,14 +243,14 @@ const fetchTokenDataByAxios = async (ca) => {
 const parseTokenData = (tokenData) => {
   let arr = [`币种: ${tokenData.symbol}(${tokenData.name})`];
   arr.push(
-    `创建时间: ${dayjs(tokenData.creation_timestamp * 1000).tz('Asia/Shanghai').format(
-      "YYYY-MM-DD HH:mm:ss"
-    )}`
+    `创建时间: ${dayjs(tokenData.creation_timestamp * 1000)
+      .tz("Asia/Shanghai")
+      .format("YYYY-MM-DD HH:mm:ss")}`
   );
   arr.push(
-    `发射时间: ${dayjs(tokenData.open_timestamp * 1000).tz('Asia/Shanghai').format(
-      "YYYY-MM-DD HH:mm:ss"
-    )}`
+    `发射时间: ${dayjs(tokenData.open_timestamp * 1000)
+      .tz("Asia/Shanghai")
+      .format("YYYY-MM-DD HH:mm:ss")}`
   );
   arr.push(`价格: ${tokenData.price}`);
   arr.push(`市值: ${formatNumber(tokenData.market_cap)}`);
@@ -258,7 +258,15 @@ const parseTokenData = (tokenData) => {
   // arr.push(`FDV: ${formatNumber(tokenData.fdv)}`);
   // arr.push("\n");
   arr.push(`池子: ${formatNumber(tokenData.liquidity)}`);
-  arr.push(`持有人: ${tokenData.holder_count}`);
+  arr.push(
+    `持有人: ${tokenData.holder_count} ${
+      tokenData.insider_percentage
+        ? `(老鼠仓${new BigNumber(tokenData.insider_percentage)
+            .times(100)
+            .toFixed(2)}%)`
+        : ""
+    }`
+  );
   arr.push(
     `热度等级: ${tokenData.hot_level || ""} ${
       tokenData.groupCount ? `(${tokenData.groupCount}个群)` : ""
@@ -284,7 +292,7 @@ const parseTokenData = (tokenData) => {
       tokenData.price
     )}`
   );
- 
+
   arr.push(`1H成交额: ${formatNumber(tokenData.volume_5m)} `);
   arr.push(`24H成交额: ${formatNumber(tokenData.volume_24h)} `);
 
@@ -338,9 +346,13 @@ const parseTokenData = (tokenData) => {
   // );
   arr.push("\n");
   arr.push(`查看K线: https://gmgn.ai/sol/token/FXi8XcLL_${tokenData.address}`);
-  arr.push(`DEV发币记录: https://pump.fun/profile/${tokenData.creator_address}`);
+  arr.push(
+    `DEV发币记录: https://pump.fun/profile/${tokenData.creator_address}`
+  );
   arr.push("\n");
-  arr.push(`查询时间: ${dayjs().tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss")}`);
+  arr.push(
+    `查询时间: ${dayjs().tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss")}`
+  );
 
   return arr.join("\n").replace(/\n\n/g, "\n");
 };
@@ -385,13 +397,37 @@ const getTokenInfo = async (ca) => {
   return tokenInfo;
 };
 
+/**
+   * {
+  "code": 0,
+  "reason": "",
+  "message": "success",
+  "data": {
+    "smart_degen_count": 0,
+    "renowned_count": 0,
+    "fresh_wallet_count": 0,
+    "dex_bot_count": 0,
+    "insider_count": 3,
+    "insider_percentage": "0.0273457",
+    "following_count": 0
+  }
+}
+ */
+const getHolderStatus = async (ca) => {
+  let { data } = await axios.get(
+    `https://gmgn.ai/api/v1/token_holder_stat/sol/${ca}`
+  );
+  return data;
+};
+
 const handleSolanaMessage = async (msg) => {
   console.log("获取gmgn数据", msg);
   if (isValidSolanaAddress(msg)) {
     // let data = await fetchDataByPuppeteer(msg);
-    let [data, data2] = await Promise.all([
+    let [data, data2, data3] = await Promise.all([
       fetchDataByPuppeteer(msg),
       fetchHotList(msg),
+      getHolderStatus(msg)
     ]);
     let tokenInfo = null;
     if (data) {
@@ -406,6 +442,11 @@ const handleSolanaMessage = async (msg) => {
         tokenInfo.groupCount = hot["群数"] + 1;
         tokenInfo.queryCount = hot["次数"] + 1;
       }
+
+      if (data3 && data3.data && data3.data.insider_percentage) {
+        tokenInfo.insider_percentage = data3.data.data.insider_percentage;
+      }
+
       let str = parseTokenData(tokenInfo);
       console.log("===========");
       console.log(str);
@@ -447,6 +488,8 @@ const fetchHotList = async (ca, token = "") => {
 // fetchDataByPuppeteer('DLHNY1ViRpqvGy1GrusEt19YXyPqMSUSVpGiS557pump');
 
 // fetchHotList("DLHNY1ViRpqvGy1GrusEt19YXyPqMSUSVpGiS557pump", "");
+
+// getHolderStatus('4Voi1otx7esG6nYzJ7k8FxH6csN7D67MiDpsZzathWhE')
 
 export {
   isValidSolanaAddress,
