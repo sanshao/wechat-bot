@@ -16,10 +16,10 @@ dayjs.extend(timezone);
 // console.log(dayjs().tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss"));
 
 // Solana连接
-const connection = new Connection(
-  "https://api.mainnet-beta.solana.com",
-  "confirmed"
-);
+// const connection = new Connection(
+//   "https://api.mainnet-beta.solana.com",
+//   "confirmed"
+// );
 
 const isValidSolanaAddress = (address) => {
   const solanaAddressRegex = /^[1-9A-HJ-NP-Za-km-z]{43,44}$/;
@@ -70,10 +70,12 @@ const fetchDataByPuppeteer = async (ca) => {
   return null;
 };
 
-const fetchTokenHolderByPuppeteer = async (ca) => {
-  const url = `https://gmgn.ai/api/v1/token_holder_stat/sol/${ca}`;
+const getTokenInfoByPuppteer = async (ca) => {
+  const url = `https://gmgn.ai/sol/token/${ca}`;
   // 启动浏览器
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disabled-setupid-sandbox"],
+  });
   const page = await browser.newPage();
 
   // 设置用户代理（可选）
@@ -92,7 +94,7 @@ const fetchTokenHolderByPuppeteer = async (ca) => {
   await browser.close();
 
   try {
-    const regex = /<pre>(.*?)<\/pre>/s;
+    const regex = /<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/s;
     const match = html.match(regex);
     if (match && match[1]) {
       const jsonString = match[1];
@@ -100,7 +102,10 @@ const fetchTokenHolderByPuppeteer = async (ca) => {
       try {
         // 解析 JSON 数据
         const jsonData = JSON.parse(jsonString);
-        return jsonData;
+        if (jsonData.props && jsonData.props.pageProps && jsonData.props.pageProps.tokenInfo) {
+          return jsonData.props.pageProps.tokenInfo;
+        }
+        return null;
       } catch (error) {
         console.error("JSON 解析错误:", error);
       }
@@ -111,6 +116,8 @@ const fetchTokenHolderByPuppeteer = async (ca) => {
 
   return null;
 };
+
+getTokenInfoByPuppteer('eL5fUxj2J4CiQsmW85k5FG9DvuQjjUoBHoQBi2Kpump')
 
 const fetchTokenDataByAxios = async (ca) => {
   const url = `https://gmgn.ai/_next/data/BuKFsRDHemPLDNhH-GMOd/sol/token/${ca}.json?chain=sol&token=${ca}`;
@@ -458,18 +465,12 @@ const handleSolanaMessage = async (msg) => {
   console.log("获取gmgn数据", msg);
   if (isValidSolanaAddress(msg)) {
     // let data = await fetchDataByPuppeteer(msg);
-    let [data, data2, data3, data4] = await Promise.all([
-      fetchTokenDataByAxios(msg),
+    let [tokenInfo, data2, data3, data4] = await Promise.all([
+      getTokenInfoByPuppteer(msg),
       fetchHotList(msg),
       getHolderStatus(msg),
       getLaunchpad(msg),
     ]);
-    let tokenInfo = null;
-    if (data) {
-      if (data && data.pageProps && data.pageProps.tokenInfo) {
-        tokenInfo = data.pageProps.tokenInfo;
-      }
-    }
 
     if (tokenInfo) {
       if (data2 && data2.data && data2.data.length) {
