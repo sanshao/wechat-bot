@@ -21,7 +21,9 @@ const isValidSolanaAddress = (address) => {
 const fetchDataByPuppeteer = async (ca) => {
   const url = `https://gmgn.ai/_next/data/BuKFsRDHemPLDNhH-GMOd/sol/token/${ca}.json?chain=sol&token=${ca}`;
   // 启动浏览器
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disabled-setupid-sandbox"],
+  });
   const page = await browser.newPage();
 
   // 设置用户代理（可选）
@@ -398,7 +400,6 @@ const handleSolanaMessage = async (msg) => {
       console.log(str);
       return str;
     }
-    
   }
   return null;
 };
