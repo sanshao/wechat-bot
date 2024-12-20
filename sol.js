@@ -109,7 +109,7 @@ const getTokenInfoByAxios = async (ca) => {
   return null;
 };
 
-// getTokenInfoByPuppteer('eL5fUxj2J4CiQsmW85k5FG9DvuQjjUoBHoQBi2Kpump')
+// getTokenInfoByAxios('eL5fUxj2J4CiQsmW85k5FG9DvuQjjUoBHoQBi2Kpump')
 
 const fetchTokenDataByAxios = async (ca) => {
   const url = `https://gmgn.ai/_next/data/BuKFsRDHemPLDNhH-GMOd/sol/token/${ca}.json?chain=sol&token=${ca}`;
