@@ -70,31 +70,17 @@ const fetchDataByPuppeteer = async (ca) => {
   return null;
 };
 
-const getTokenInfoByPuppteer = async (ca) => {
+const getTokenInfoByAxios = async (ca) => {
   const url = `https://gmgn.ai/sol/token/${ca}`;
   // 启动浏览器
-  const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disabled-setupid-sandbox"],
-  });
-  const page = await browser.newPage();
-
-  // 设置用户代理（可选）
-  await page.setUserAgent(
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+  const response = await axios.get(
+    url
   );
-
-  // 访问目标网址
-  await page.goto(url, { waitUntil: "networkidle2" });
-
-  // 获取页面内容
-  const html = await page.content();
-  console.log("网页内容:", html); // 打印网页内容
-
-  // 关闭浏览器
-  await browser.close();
+  const html = response.data;
 
   try {
-    const regex = /<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/s;
+    const regex =
+      /<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/s;
     const match = html.match(regex);
     if (match && match[1]) {
       const jsonString = match[1];
@@ -102,7 +88,11 @@ const getTokenInfoByPuppteer = async (ca) => {
       try {
         // 解析 JSON 数据
         const jsonData = JSON.parse(jsonString);
-        if (jsonData.props && jsonData.props.pageProps && jsonData.props.pageProps.tokenInfo) {
+        if (
+          jsonData.props &&
+          jsonData.props.pageProps &&
+          jsonData.props.pageProps.tokenInfo
+        ) {
           return jsonData.props.pageProps.tokenInfo;
         }
         return null;
@@ -112,7 +102,9 @@ const getTokenInfoByPuppteer = async (ca) => {
     } else {
       console.log("未找到 JSON 数据");
     }
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 
   return null;
 };
@@ -466,7 +458,7 @@ const handleSolanaMessage = async (msg) => {
   if (isValidSolanaAddress(msg)) {
     // let data = await fetchDataByPuppeteer(msg);
     let [tokenInfo, data2, data3, data4] = await Promise.all([
-      getTokenInfoByPuppteer(msg),
+      getTokenInfoByAxios(msg),
       fetchHotList(msg),
       getHolderStatus(msg),
       getLaunchpad(msg),
