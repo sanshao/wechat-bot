@@ -344,13 +344,13 @@ const parseTokenData = (tokenData) => {
   return arr.join("\n").replace(/\n\n/g, "\n");
 };
 
-const percent100 = (price, basePrice) => {
-  if (!price || !basePrice) {
+const percent100 = (oldPrice, price) => {
+  if (!price || !oldPrice) {
     return "0.00%";
   }
   return `${new BigNumber(price)
-    .minus(basePrice)
-    .dividedBy(basePrice)
+    .minus(oldPrice)
+    .dividedBy(oldPrice)
     .times(100)
     .toFixed(2)}%`;
 };
