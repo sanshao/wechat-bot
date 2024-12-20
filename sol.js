@@ -9,11 +9,11 @@ import https from "https";
 import utc from "dayjs/plugin/utc.js";
 import timezone from "dayjs/plugin/timezone.js";
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.tz.setDefault("Asia/Shanghai");
+// dayjs.extend(utc);
+// dayjs.extend(timezone);
+// dayjs.tz.setDefault("Asia/Shanghai");
 
-console.log(dayjs().tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss"));
+// console.log(dayjs().tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss"));
 
 // Solana连接
 const connection = new Connection(
