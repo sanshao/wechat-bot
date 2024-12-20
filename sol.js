@@ -241,16 +241,16 @@ const fetchTokenDataByAxios = async (ca) => {
  * @returns 
  */
 const parseTokenData = (tokenData) => {
-  let arr = [`币种: ${tokenData.symbol}(${tokenData.name})`];
+  let arr = [`🎗️币种: ${tokenData.symbol}(${tokenData.name})`];
   arr.push(
-    `创建时间: ${dayjs(tokenData.creation_timestamp * 1000)
+    `⏰创建时间: ${dayjs(tokenData.creation_timestamp * 1000)
       .tz("Asia/Shanghai")
-      .format("YYYY-MM-DD HH:mm:ss")}`
+      .format("YY-MM-DD HH:mm:ss")}`
   );
   arr.push(
-    `发射时间: ${dayjs(tokenData.open_timestamp * 1000)
+    `🕗发射时间: ${dayjs(tokenData.open_timestamp * 1000)
       .tz("Asia/Shanghai")
-      .format("YYYY-MM-DD HH:mm:ss")}`
+      .format("YY-MM-DD HH:mm:ss")}`
   );
   arr.push(`💰价格: ${tokenData.price}`);
   arr.push(`💹市值: ${formatNumber(tokenData.market_cap)}`);
@@ -281,13 +281,13 @@ const parseTokenData = (tokenData) => {
 
   // arr.push("\n");
   arr.push(
-    `1M: ${percent100(tokenData.price_1m, tokenData.price)}   5M: ${percent100(
+    `⌛️1M: ${percent100(tokenData.price_1m, tokenData.price)}   5M: ${percent100(
       tokenData.price_5m,
       tokenData.price
     )}`
   );
   arr.push(
-    `1H: ${percent100(tokenData.price_1h, tokenData.price)}   24H: ${percent100(
+    `⏳1H: ${percent100(tokenData.price_1h, tokenData.price)}   24H: ${percent100(
       tokenData.price_24h,
       tokenData.price
     )}`
@@ -351,7 +351,7 @@ const parseTokenData = (tokenData) => {
   );
   arr.push("\n");
   arr.push(
-    `⏰查询时间: ${dayjs().tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss")}`
+    `⌚️查询时间: ${dayjs().tz("Asia/Shanghai").format("YY-MM-DD HH:mm:ss")}`
   );
 
   return arr.join("\n").replace(/\n\n/g, "\n");
