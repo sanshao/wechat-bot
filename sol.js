@@ -247,11 +247,21 @@ const parseTokenData = (tokenData) => {
       .tz("Asia/Shanghai")
       .format("YY-MM-DD HH:mm:ss")}`
   );
-  arr.push(
-    `🕗发射时间: ${dayjs(tokenData.open_timestamp * 1000)
-      .tz("Asia/Shanghai")
-      .format("YY-MM-DD HH:mm:ss")}`
-  );
+
+  if (tokenData.open_timestamp > 0) {
+    arr.push(
+      `🕗发射时间: ${dayjs(tokenData.open_timestamp * 1000)
+        .tz("Asia/Shanghai")
+        .format("YY-MM-DD HH:mm:ss")}`
+    );
+  } else if (tokenData.launchpad_progress) {
+    arr.push(
+      `🕗发射时间: ${new BigNumber(tokenData.launchpad_progress)
+        .times(100)
+        .toFixed(2)}%`
+    );
+  }
+
   arr.push(`💰价格: ${tokenData.price}`);
   arr.push(`💹市值: ${formatNumber(tokenData.market_cap)}`);
   // arr.push(`流通市值: ${formatNumber(tokenData.circulating_market_cap)}`);
@@ -284,16 +294,16 @@ const parseTokenData = (tokenData) => {
 
   // arr.push("\n");
   arr.push(
-    `⌛️1M: ${percent100(tokenData.price_1m, tokenData.price)}   5M: ${percent100(
-      tokenData.price_5m,
+    `⌛️1M: ${percent100(
+      tokenData.price_1m,
       tokenData.price
-    )}`
+    )}   5M: ${percent100(tokenData.price_5m, tokenData.price)}`
   );
   arr.push(
-    `⏳1H: ${percent100(tokenData.price_1h, tokenData.price)}   24H: ${percent100(
-      tokenData.price_24h,
+    `⏳1H: ${percent100(
+      tokenData.price_1h,
       tokenData.price
-    )}`
+    )}   24H: ${percent100(tokenData.price_24h, tokenData.price)}`
   );
 
   // arr.push("\n");
@@ -345,7 +355,9 @@ const parseTokenData = (tokenData) => {
   //   `Net Buy: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`
   // );
   arr.push("\n");
-  arr.push(`📈查看K线: https://gmgn.ai/sol/token/FXi8XcLL_${tokenData.address}`);
+  arr.push(
+    `📈查看K线: https://gmgn.ai/sol/token/FXi8XcLL_${tokenData.address}`
+  );
   arr.push(
     `🔰DEV发币记录: https://pump.fun/profile/${tokenData.creator_address}`
   );
@@ -420,14 +432,37 @@ const getHolderStatus = async (ca) => {
   return data;
 };
 
+/**
+ * 
+{
+  "code": 0,
+  "reason": "",
+  "message": "success",
+  "data": {
+    "address": "H6yXQSzeqRA91NPWwrDA9hZDihVGFcz9CdKokY3Ppump",
+    "launchpad": "Pump.fun",
+    "launchpad_status": 0,
+    "launchpad_progress": "0.04135357867184283",
+    "description": "Most Bullish Farting Duck in Crypto Space! 🐥"
+  }
+}
+ */
+const getLaunchpad = async (ca) => {
+  let { data } = await axios.get(
+    `https://gmgn.ai/api/v1/token_launchpad_info/sol/${ca}`
+  );
+  return data;
+};
+
 const handleSolanaMessage = async (msg) => {
   console.log("获取gmgn数据", msg);
   if (isValidSolanaAddress(msg)) {
     // let data = await fetchDataByPuppeteer(msg);
-    let [data, data2, data3] = await Promise.all([
+    let [data, data2, data3, data4] = await Promise.all([
       fetchTokenDataByAxios(msg),
       fetchHotList(msg),
-      getHolderStatus(msg)
+      getHolderStatus(msg),
+      getLaunchpad(msg),
     ]);
     let tokenInfo = null;
     if (data) {
@@ -445,6 +480,10 @@ const handleSolanaMessage = async (msg) => {
 
       if (data3 && data3.data && data3.data.insider_percentage) {
         tokenInfo.insider_percentage = data3.data.insider_percentage;
+      }
+
+      if (data4 && data4.data && data4.data.launchpad_progress) {
+        tokenInfo.launchpad_progress = data4.data.launchpad_progress;
       }
 
       let str = parseTokenData(tokenInfo);
