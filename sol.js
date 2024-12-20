@@ -117,32 +117,32 @@ const fetchTokenDataByAxios = async (ca) => {
 
   const options = {
     headers: {
-      accept:
-        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-      "accept-language": "en,zh-CN;q=0.9,zh-TW;q=0.8,zh;q=0.7",
-      "cache-control": "no-cache",
-      cookie:
-        "_ga=GA1.1.1458041448.1721781969; cf_clearance=_fI5wdykP2_dEVBBJFSVBP9tcsqwcbiMfVa2Pye.Zss-1734615831-1.2.1.1-J7qVMTFkbk4teIwdMAmaDZyUm2vlOxqx8TAQ5j1Ci1kTfz.jGw46JXkUxlpwLHOqiOTQOeagBsd7MDkSYSfjF8T21Po68y4PE6mQksATC1QouAOe0zgkm0r7288NPm0rLKEFUNyyfZA5yFItauMv3R2TNYhlzcMFZOrhkhPTOCG3u40ke7EXUXenH.HkwKN8o0x1uVeGPKP9CFZq..lrkZH6lIx7CTkjUOMdIaqwwOFNxF_R7Mw4.aMo8mNBBN7r.gDp9epm6Mnm9rwAaq_0v2GZMY3ov5EKIrJzgTNUIM1LSMyCaZ_YebSgadqKYXS7WvoLgPUgHnOFnp9HnCRsXyxkqBBTHKrUBXJEegMelVK6piKLQfixulZjdseBqzT2NiULJd0uYV6DiW.BvvLG0Q; _ga_0XM0LYXGC8=GS1.1.1734615827.25.1.1734615844.0.0.0; __cf_bm=Wk.2mpuIQPPlisCILiJ9YW0E2tnwFq2.18gN6fduAiQ-1734617640-1.0.1.1-FaWl8qmoxkoJrB8pReLWN.NgHr1MhBIqxX63le4t9YLQCJbTgLXlT660_l97V8oc1.WSoSidxADwtPrKaaRMyQ",
-      pragma: "no-cache",
-      priority: "u=0, i",
-      "sec-ch-ua":
-        '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
-      "sec-ch-ua-arch": '"x86"',
-      "sec-ch-ua-bitness": '"64"',
-      "sec-ch-ua-full-version": '"131.0.6778.140"',
-      "sec-ch-ua-full-version-list":
-        '"Google Chrome";v="131.0.6778.140", "Chromium";v="131.0.6778.140", "Not_A Brand";v="24.0.0.0"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-model": '""',
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-ch-ua-platform-version": '"14.2.1"',
-      "sec-fetch-dest": "document",
-      "sec-fetch-mode": "navigate",
-      "sec-fetch-site": "none",
-      "sec-fetch-user": "?1",
-      "upgrade-insecure-requests": "1",
-      "user-agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+      // accept:
+      //   "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+      // "accept-language": "en,zh-CN;q=0.9,zh-TW;q=0.8,zh;q=0.7",
+      // "cache-control": "no-cache",
+      // cookie:
+      //   "_ga=GA1.1.1458041448.1721781969; cf_clearance=_fI5wdykP2_dEVBBJFSVBP9tcsqwcbiMfVa2Pye.Zss-1734615831-1.2.1.1-J7qVMTFkbk4teIwdMAmaDZyUm2vlOxqx8TAQ5j1Ci1kTfz.jGw46JXkUxlpwLHOqiOTQOeagBsd7MDkSYSfjF8T21Po68y4PE6mQksATC1QouAOe0zgkm0r7288NPm0rLKEFUNyyfZA5yFItauMv3R2TNYhlzcMFZOrhkhPTOCG3u40ke7EXUXenH.HkwKN8o0x1uVeGPKP9CFZq..lrkZH6lIx7CTkjUOMdIaqwwOFNxF_R7Mw4.aMo8mNBBN7r.gDp9epm6Mnm9rwAaq_0v2GZMY3ov5EKIrJzgTNUIM1LSMyCaZ_YebSgadqKYXS7WvoLgPUgHnOFnp9HnCRsXyxkqBBTHKrUBXJEegMelVK6piKLQfixulZjdseBqzT2NiULJd0uYV6DiW.BvvLG0Q; _ga_0XM0LYXGC8=GS1.1.1734615827.25.1.1734615844.0.0.0; __cf_bm=Wk.2mpuIQPPlisCILiJ9YW0E2tnwFq2.18gN6fduAiQ-1734617640-1.0.1.1-FaWl8qmoxkoJrB8pReLWN.NgHr1MhBIqxX63le4t9YLQCJbTgLXlT660_l97V8oc1.WSoSidxADwtPrKaaRMyQ",
+      // pragma: "no-cache",
+      // priority: "u=0, i",
+      // "sec-ch-ua":
+      //   '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+      // "sec-ch-ua-arch": '"x86"',
+      // "sec-ch-ua-bitness": '"64"',
+      // "sec-ch-ua-full-version": '"131.0.6778.140"',
+      // "sec-ch-ua-full-version-list":
+      //   '"Google Chrome";v="131.0.6778.140", "Chromium";v="131.0.6778.140", "Not_A Brand";v="24.0.0.0"',
+      // "sec-ch-ua-mobile": "?0",
+      // "sec-ch-ua-model": '""',
+      // "sec-ch-ua-platform": '"macOS"',
+      // "sec-ch-ua-platform-version": '"14.2.1"',
+      // "sec-fetch-dest": "document",
+      // "sec-fetch-mode": "navigate",
+      // "sec-fetch-site": "none",
+      // "sec-fetch-user": "?1",
+      // "upgrade-insecure-requests": "1",
+      // "user-agent":
+      //   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
     },
   };
 
@@ -252,34 +252,34 @@ const parseTokenData = (tokenData) => {
       .tz("Asia/Shanghai")
       .format("YYYY-MM-DD HH:mm:ss")}`
   );
-  arr.push(`价格: ${tokenData.price}`);
-  arr.push(`市值: ${formatNumber(tokenData.market_cap)}`);
+  arr.push(`💰价格: ${tokenData.price}`);
+  arr.push(`💹市值: ${formatNumber(tokenData.market_cap)}`);
   // arr.push(`流通市值: ${formatNumber(tokenData.circulating_market_cap)}`);
   // arr.push(`FDV: ${formatNumber(tokenData.fdv)}`);
   // arr.push("\n");
-  arr.push(`池子: ${formatNumber(tokenData.liquidity)}`);
+  arr.push(`🛁池子: ${formatNumber(tokenData.liquidity)}`);
   arr.push(
-    `持有人: ${tokenData.holder_count} ${
+    `🎅持有人: ${tokenData.holder_count} ${
       tokenData.insider_percentage
-        ? `(老鼠仓${new BigNumber(tokenData.insider_percentage)
+        ? `(🐭老鼠仓${new BigNumber(tokenData.insider_percentage)
             .times(100)
             .toFixed(2)}%)`
         : ""
     }`
   );
   arr.push(
-    `热度等级: ${tokenData.hot_level || ""} ${
+    `🔥热度等级: ${tokenData.hot_level || ""} ${
       tokenData.groupCount ? `(${tokenData.groupCount}个群)` : ""
     } ${tokenData.queryCount ? `(${tokenData.queryCount}次查询)` : ""}`
   );
-  arr.push(`Dev持仓: ${formatNumber(tokenData.creator_token_balance)}`);
+  arr.push(`👶Dev持仓: ${formatNumber(tokenData.creator_token_balance)}`);
   arr.push(
-    `Top10持仓: ${new BigNumber(tokenData.top_10_holder_rate)
+    `🐋Top10持仓: ${new BigNumber(tokenData.top_10_holder_rate)
       .times(100)
       .toFixed(2)}%`
   );
 
-  arr.push("\n");
+  // arr.push("\n");
   arr.push(
     `1M: ${percent100(tokenData.price_1m, tokenData.price)}   5M: ${percent100(
       tokenData.price_5m,
@@ -293,8 +293,8 @@ const parseTokenData = (tokenData) => {
     )}`
   );
 
-  arr.push(`1H成交额: ${formatNumber(tokenData.volume_5m)} `);
-  arr.push(`24H成交额: ${formatNumber(tokenData.volume_24h)} `);
+  arr.push(`💵1H成交额: ${formatNumber(tokenData.volume_5m)} `);
+  arr.push(`💸24H成交额: ${formatNumber(tokenData.volume_24h)} `);
 
   // arr.push("\n");
   // arr.push("====== 1M ======");
@@ -345,13 +345,13 @@ const parseTokenData = (tokenData) => {
   //   `Net Buy: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`
   // );
   arr.push("\n");
-  arr.push(`查看K线: https://gmgn.ai/sol/token/FXi8XcLL_${tokenData.address}`);
+  arr.push(`📈查看K线: https://gmgn.ai/sol/token/FXi8XcLL_${tokenData.address}`);
   arr.push(
-    `DEV发币记录: https://pump.fun/profile/${tokenData.creator_address}`
+    `🔰DEV发币记录: https://pump.fun/profile/${tokenData.creator_address}`
   );
   arr.push("\n");
   arr.push(
-    `查询时间: ${dayjs().tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss")}`
+    `⏰查询时间: ${dayjs().tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss")}`
   );
 
   return arr.join("\n").replace(/\n\n/g, "\n");
@@ -425,7 +425,7 @@ const handleSolanaMessage = async (msg) => {
   if (isValidSolanaAddress(msg)) {
     // let data = await fetchDataByPuppeteer(msg);
     let [data, data2, data3] = await Promise.all([
-      fetchDataByPuppeteer(msg),
+      fetchTokenDataByAxios(msg),
       fetchHotList(msg),
       getHolderStatus(msg)
     ]);
