@@ -235,12 +235,12 @@ const fetchTokenDataByAxios = async (ca) => {
 const parseTokenData = (tokenData) => {
   let arr = [`币种: ${tokenData.symbol}(${tokenData.name})`];
   arr.push(
-    `创建时间: ${dayjs(tokenData.creation_timestamp * 1000).format(
+    `创建时间: ${dayjs(tokenData.creation_timestamp * 1000).utcOffset(8).format(
       "YYYY-MM-DD HH:mm:ss"
     )}`
   );
   arr.push(
-    `发射时间: ${dayjs(tokenData.open_timestamp * 1000).format(
+    `发射时间: ${dayjs(tokenData.open_timestamp * 1000).utcOffset(8).format(
       "YYYY-MM-DD HH:mm:ss"
     )}`
   );
@@ -328,7 +328,7 @@ const parseTokenData = (tokenData) => {
   );
 
   arr.push("\n");
-  arr.push(`=== ${dayjs().format("YYYY-MM-DD HH:mm:ss")} ===`);
+  arr.push(`=== ${dayjs().utcOffset(8).format("YYYY-MM-DD HH:mm:ss")} ===`);
 
   return arr.join("\n").replace(/\n\n/g, "\n");
 };
