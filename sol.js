@@ -284,8 +284,11 @@ const parseTokenData = (tokenData) => {
       tokenData.price
     )}`
   );
-  arr.push(`1H成交: ${formatNumber(tokenData.volume_5m)} `);
-  arr.push(`24H成交: ${formatNumber(tokenData.volume_24h)} `);
+  arr.push(
+    `1小时成交: ${formatNumber(tokenData.volume_1h)}     24H成交: ${formatNumber(tokenData.volume_24h)}`
+  )
+  // arr.push(`1H成交: ${formatNumber(tokenData.volume_5m)} `);
+  // arr.push(`24H成交: ${formatNumber(tokenData.volume_24h)} `);
 
   // arr.push("\n");
   // arr.push("====== 1M ======");
@@ -336,9 +339,9 @@ const parseTokenData = (tokenData) => {
   //   `Net Buy: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`
   // );
   arr.push("\n");
-  arr.push(`https://gmgn.ai/sol/token/FXi8XcLL_${tokenData.address}?tab=holders`);
+  arr.push(`查看K线: https://gmgn.ai/sol/token/FXi8XcLL_${tokenData.address}`);
   arr.push("\n");
-  arr.push(`=== ${dayjs().tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss")} ===`);
+  arr.push(`查询时间: ${dayjs().tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss")}`);
 
   return arr.join("\n").replace(/\n\n/g, "\n");
 };
