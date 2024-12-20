@@ -355,7 +355,7 @@ const percent100 = (oldPrice, price) => {
     .toFixed(2)}%`;
 };
 
-const formatNumber = (value) => {
+const formatNumber = (value, decimals = 2) => {
   const number = new BigNumber(value);
 
   if (number.isNaN()) {
@@ -363,13 +363,13 @@ const formatNumber = (value) => {
   }
 
   if (number.isLessThan(1000)) {
-    return number.toFixed(2); // 小于千的直接返回，保留两位小数
+    return number.toFixed(decimals); // 小于千的直接返回，保留两位小数
   } else if (number.isLessThan(1e6)) {
-    return `${number.dividedBy(1000).toFixed(2)}K`; // 千的表示
+    return `${number.dividedBy(1000).toFixed(decimals)}K`; // 千的表示
   } else if (number.isLessThan(1e9)) {
-    return `${number.dividedBy(1e6).toFixed(2)}M`; // 百万的表示
+    return `${number.dividedBy(1e6).toFixed(decimals)}M`; // 百万的表示
   } else {
-    return `${number.dividedBy(1e9).toFixed(2)}B`; // 十亿的表示
+    return `${number.dividedBy(1e9).toFixed(decimals)}B`; // 十亿的表示
   }
 };
 
