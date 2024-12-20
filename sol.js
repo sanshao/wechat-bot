@@ -328,9 +328,9 @@ const parseTokenData = (tokenData) => {
   );
 
   arr.push("\n");
-  arr.push(`== ${dayjs().format("YYYY-MM-DD HH:mm:ss")} ==`);
+  arr.push(`=== ${dayjs().format("YYYY-MM-DD HH:mm:ss")} ===`);
 
-  return arr.join("\n");
+  return arr.join("\n").replace(/\n\n/g, "\n");
 };
 
 const percent100 = (price, basePrice) => {
