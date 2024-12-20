@@ -444,7 +444,7 @@ const handleSolanaMessage = async (msg) => {
       }
 
       if (data3 && data3.data && data3.data.insider_percentage) {
-        tokenInfo.insider_percentage = data3.data.data.insider_percentage;
+        tokenInfo.insider_percentage = data3.data.insider_percentage;
       }
 
       let str = parseTokenData(tokenInfo);
