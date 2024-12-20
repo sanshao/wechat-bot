@@ -256,7 +256,7 @@ const parseTokenData = (tokenData) => {
   arr.push(`市值: ${formatNumber(tokenData.market_cap)}`);
   // arr.push(`流通市值: ${formatNumber(tokenData.circulating_market_cap)}`);
   // arr.push(`FDV: ${formatNumber(tokenData.fdv)}`);
-  arr.push("\n");
+  // arr.push("\n");
   arr.push(`池子: ${formatNumber(tokenData.liquidity)}`);
   arr.push(`持有人: ${tokenData.holder_count}`);
   arr.push(
@@ -271,7 +271,7 @@ const parseTokenData = (tokenData) => {
       .toFixed(2)}%`
   );
 
-  // arr.push("\n");
+  arr.push("\n");
   arr.push(
     `1M: ${percent100(tokenData.price_1m, tokenData.price)}   5M: ${percent100(
       tokenData.price_5m,
@@ -284,8 +284,8 @@ const parseTokenData = (tokenData) => {
       tokenData.price
     )}`
   );
-  arr.push(`1H Volumn: ${formatNumber(tokenData.volume_5m)} `);
-  arr.push(`24H Volumn: ${formatNumber(tokenData.volume_24h)} `);
+  arr.push(`1H成交: ${formatNumber(tokenData.volume_5m)} `);
+  arr.push(`24H成交: ${formatNumber(tokenData.volume_24h)} `);
 
   // arr.push("\n");
   // arr.push("====== 1M ======");
