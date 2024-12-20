@@ -430,7 +430,7 @@ const fetchHotList = async (ca, token = "") => {
   return null;
 };
 
-handleSolanaMessage("DLHNY1ViRpqvGy1GrusEt19YXyPqMSUSVpGiS557pump");
+// handleSolanaMessage("DLHNY1ViRpqvGy1GrusEt19YXyPqMSUSVpGiS557pump");
 
 // fetchDataByPuppeteer('DLHNY1ViRpqvGy1GrusEt19YXyPqMSUSVpGiS557pump');
 
