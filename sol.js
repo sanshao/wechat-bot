@@ -334,9 +334,10 @@ const parseTokenData = (tokenData) => {
   arr.push(
     `Net Buy: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`
   );
-
   arr.push("\n");
-  arr.push(`=== ${dayjs().tz('Asia/Shanghai').format("YYYY-MM-DD HH:mm:ss")} ===`);
+  arr.push(`https://gmgn.ai/sol/token/FXi8XcLL_${tokenData.address}?tab=holders`);
+  arr.push("\n");
+  arr.push(`=== ${dayjs().tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss")} ===`);
 
   return arr.join("\n").replace(/\n\n/g, "\n");
 };
