@@ -6,6 +6,12 @@ import BigNumber from "bignumber.js";
 import puppeteer from "puppeteer";
 import https from "https";
 // import db from './db'
+import utc from 'dayjs/plugin/utc.js'
+import timezone from 'dayjs/plugin/timezone.js' 
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.tz.setDefault('Asia/Shanghai')
 
 // Solana连接
 const connection = new Connection(
@@ -431,7 +437,7 @@ const fetchHotList = async (ca, token = "") => {
   return null;
 };
 
-// handleSolanaMessage("DLHNY1ViRpqvGy1GrusEt19YXyPqMSUSVpGiS557pump");
+handleSolanaMessage("DLHNY1ViRpqvGy1GrusEt19YXyPqMSUSVpGiS557pump");
 
 // fetchDataByPuppeteer('DLHNY1ViRpqvGy1GrusEt19YXyPqMSUSVpGiS557pump');
 
