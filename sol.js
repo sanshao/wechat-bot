@@ -22,7 +22,7 @@ const connection = new Connection(
 );
 
 const isValidSolanaAddress = (address) => {
-  const solanaAddressRegex = /^[1-9A-HJ-NP-Za-km-z]{44}$/;
+  const solanaAddressRegex = /^[1-9A-HJ-NP-Za-km-z]{43,44}$/;
   return solanaAddressRegex.test(address);
 };
 
