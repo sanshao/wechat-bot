@@ -284,11 +284,9 @@ const parseTokenData = (tokenData) => {
       tokenData.price
     )}`
   );
-  arr.push(
-    `1小时成交: ${formatNumber(tokenData.volume_1h)}     24H成交: ${formatNumber(tokenData.volume_24h)}`
-  )
-  // arr.push(`1H成交: ${formatNumber(tokenData.volume_5m)} `);
-  // arr.push(`24H成交: ${formatNumber(tokenData.volume_24h)} `);
+ 
+  arr.push(`1H成交额: ${formatNumber(tokenData.volume_5m)} `);
+  arr.push(`24H成交额: ${formatNumber(tokenData.volume_24h)} `);
 
   // arr.push("\n");
   // arr.push("====== 1M ======");
