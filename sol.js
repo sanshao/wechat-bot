@@ -254,8 +254,8 @@ const parseTokenData = (tokenData) => {
   );
   arr.push(`价格: ${tokenData.price}`);
   arr.push(`市值: ${formatNumber(tokenData.market_cap)}`);
-  arr.push(`流通市值: ${formatNumber(tokenData.circulating_market_cap)}`);
-  arr.push(`FDV: ${formatNumber(tokenData.fdv)}`);
+  // arr.push(`流通市值: ${formatNumber(tokenData.circulating_market_cap)}`);
+  // arr.push(`FDV: ${formatNumber(tokenData.fdv)}`);
   arr.push("\n");
   arr.push(`池子: ${formatNumber(tokenData.liquidity)}`);
   arr.push(`持有人: ${tokenData.holder_count}`);
@@ -264,7 +264,6 @@ const parseTokenData = (tokenData) => {
       tokenData.groupCount ? `(${tokenData.groupCount}个群)` : ""
     } ${tokenData.queryCount ? `(${tokenData.queryCount}次查询)` : ""}`
   );
-
   arr.push(`Dev持仓: ${formatNumber(tokenData.creator_token_balance)}`);
   arr.push(
     `Top10持仓: ${new BigNumber(tokenData.top_10_holder_rate)
@@ -272,7 +271,7 @@ const parseTokenData = (tokenData) => {
       .toFixed(2)}%`
   );
 
-  arr.push("\n");
+  // arr.push("\n");
   arr.push(
     `1M: ${percent100(tokenData.price_1m, tokenData.price)}   5M: ${percent100(
       tokenData.price_5m,
@@ -285,55 +284,57 @@ const parseTokenData = (tokenData) => {
       tokenData.price
     )}`
   );
-  arr.push("\n");
+  arr.push(`1H Volumn: ${formatNumber(tokenData.volume_5m)} `);
+  arr.push(`24H Volumn: ${formatNumber(tokenData.volume_24h)} `);
 
-  arr.push("====== 1M ======");
-  arr.push(`Volumn: ${formatNumber(tokenData.volume_1m)} `);
-  arr.push(
-    `Buy: ${tokenData.buys_1m}/${formatNumber(tokenData.buy_volume_1m)} `
-  );
-  arr.push(
-    `Sell: ${tokenData.sells_1m}/${formatNumber(tokenData.sell_volume_1m)}`
-  );
-  arr.push(
-    `Net Buy: ${tokenData.sells_1m}/${formatNumber(tokenData.sell_volume_1m)}`
-  );
+  // arr.push("\n");
+  // arr.push("====== 1M ======");
+  // arr.push(`Volumn: ${formatNumber(tokenData.volume_1m)} `);
+  // arr.push(
+  //   `Buy: ${tokenData.buys_1m}/${formatNumber(tokenData.buy_volume_1m)} `
+  // );
+  // arr.push(
+  //   `Sell: ${tokenData.sells_1m}/${formatNumber(tokenData.sell_volume_1m)}`
+  // );
+  // arr.push(
+  //   `Net Buy: ${tokenData.sells_1m}/${formatNumber(tokenData.sell_volume_1m)}`
+  // );
 
-  arr.push("====== 5M ======");
-  arr.push(`Volumn: ${formatNumber(tokenData.volume_5m)} `);
-  arr.push(
-    `Buy: ${tokenData.buys_5m}/${formatNumber(tokenData.buy_volume_5m)} `
-  );
-  arr.push(
-    `Sell: ${tokenData.sells_5m}/${formatNumber(tokenData.sell_volume_5m)}`
-  );
-  arr.push(
-    `Net Buy: ${tokenData.sells_5m}/${formatNumber(tokenData.sell_volume_5m)}`
-  );
+  // arr.push("====== 5M ======");
+  // arr.push(`Volumn: ${formatNumber(tokenData.volume_5m)} `);
+  // arr.push(
+  //   `Buy: ${tokenData.buys_5m}/${formatNumber(tokenData.buy_volume_5m)} `
+  // );
+  // arr.push(
+  //   `Sell: ${tokenData.sells_5m}/${formatNumber(tokenData.sell_volume_5m)}`
+  // );
+  // arr.push(
+  //   `Net Buy: ${tokenData.sells_5m}/${formatNumber(tokenData.sell_volume_5m)}`
+  // );
 
-  arr.push("====== 1H ======");
-  arr.push(`Volumn: ${formatNumber(tokenData.volume_1h)} `);
-  arr.push(
-    `Buy: ${tokenData.buys_1h}/${formatNumber(tokenData.buy_volume_1h)} `
-  );
-  arr.push(
-    `Sell: ${tokenData.sells_1h}/${formatNumber(tokenData.sell_volume_1h)}`
-  );
-  arr.push(
-    `Net Buy: ${tokenData.sells_1h}/${formatNumber(tokenData.sell_volume_1h)}`
-  );
+  // arr.push("====== 1H ======");
+  // arr.push(`Volumn: ${formatNumber(tokenData.volume_1h)} `);
+  // arr.push(
+  //   `Buy: ${tokenData.buys_1h}/${formatNumber(tokenData.buy_volume_1h)} `
+  // );
+  // arr.push(
+  //   `Sell: ${tokenData.sells_1h}/${formatNumber(tokenData.sell_volume_1h)}`
+  // );
+  // arr.push(
+  //   `Net Buy: ${tokenData.sells_1h}/${formatNumber(tokenData.sell_volume_1h)}`
+  // );
 
-  arr.push("====== 24H ======");
-  arr.push(`Volumn: ${formatNumber(tokenData.volume_24h)} `);
-  arr.push(
-    `Buy: ${tokenData.buys_24h}/${formatNumber(tokenData.buy_volume_24h)} `
-  );
-  arr.push(
-    `Sell: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`
-  );
-  arr.push(
-    `Net Buy: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`
-  );
+  // arr.push("====== 24H ======");
+  // arr.push(`Volumn: ${formatNumber(tokenData.volume_24h)} `);
+  // arr.push(
+  //   `Buy: ${tokenData.buys_24h}/${formatNumber(tokenData.buy_volume_24h)} `
+  // );
+  // arr.push(
+  //   `Sell: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`
+  // );
+  // arr.push(
+  //   `Net Buy: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`
+  // );
   arr.push("\n");
   arr.push(`https://gmgn.ai/sol/token/FXi8XcLL_${tokenData.address}?tab=holders`);
   arr.push("\n");
