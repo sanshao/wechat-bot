@@ -257,7 +257,6 @@ const parseTokenData = (tokenData) => {
   // arr.push(`流通市值: ${formatNumber(tokenData.circulating_market_cap)}`);
   // arr.push(`FDV: ${formatNumber(tokenData.fdv)}`);
   // arr.push("\n");
-  arr.push(`🛁池子: ${formatNumber(tokenData.liquidity)}`);
   arr.push(
     `🎅持有人: ${tokenData.holder_count} ${
       tokenData.insider_percentage
@@ -278,6 +277,10 @@ const parseTokenData = (tokenData) => {
       .times(100)
       .toFixed(2)}%`
   );
+  arr.push(`🛁池子: ${formatNumber(tokenData.liquidity)}`);
+
+  arr.push(`💵1H成交额: ${formatNumber(tokenData.volume_5m)} `);
+  arr.push(`💸24H成交额: ${formatNumber(tokenData.volume_24h)} `);
 
   // arr.push("\n");
   arr.push(
@@ -292,9 +295,6 @@ const parseTokenData = (tokenData) => {
       tokenData.price
     )}`
   );
-
-  arr.push(`💵1H成交额: ${formatNumber(tokenData.volume_5m)} `);
-  arr.push(`💸24H成交额: ${formatNumber(tokenData.volume_24h)} `);
 
   // arr.push("\n");
   // arr.push("====== 1M ======");
