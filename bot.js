@@ -1,6 +1,7 @@
 import { WechatyBuilder } from "wechaty";
 import qrcodeTerminal from "qrcode-terminal";
 import { handleSolanaMessage } from "./sol.js";
+// import { db } from './db.js'
 
 const ScanStatus = {
   Unknown: 0,
@@ -49,6 +50,8 @@ async function onMessage(msg) {
   let replyText = await handleSolanaMessage(text);
   if (replyText) {
     await msg.say(replyText);
+    // db.addQueryCount(text);
+    
   }
 }
 

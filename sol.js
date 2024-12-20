@@ -4,6 +4,8 @@ import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import dayjs from "dayjs";
 import BigNumber from "bignumber.js";
 import puppeteer from "puppeteer";
+import https from "https";
+// import db from './db'
 
 // Solana连接
 const connection = new Connection(
@@ -134,8 +136,6 @@ const fetchTokenDataByAxios = async (ca) => {
     },
   };
 
-  const axiosInstance = axios.create({});
-
   try {
     const response = await axios.get(url, options);
 
@@ -249,7 +249,12 @@ const parseTokenData = (tokenData) => {
   arr.push("\n");
   arr.push(`池子: ${formatNumber(tokenData.liquidity)}`);
   arr.push(`持有人: ${tokenData.holder_count}`);
-  arr.push(`热度等级: ${tokenData.hot_level}`);
+  arr.push(
+    `热度等级: ${tokenData.hot_level || ""} ${
+      tokenData.groupCount ? `(${tokenData.groupCount}个群)` : ""
+    } ${tokenData.queryCount ? `(${tokenData.queryCount}次查询)` : ""}`
+  );
+
   arr.push(`Dev持仓: ${formatNumber(tokenData.creator_token_balance)}`);
   arr.push(
     `Top10持仓: ${new BigNumber(tokenData.top_10_holder_rate)
@@ -272,32 +277,56 @@ const parseTokenData = (tokenData) => {
   );
   arr.push("\n");
 
-  arr.push('====== 1M ======');
+  arr.push("====== 1M ======");
   arr.push(`Volumn: ${formatNumber(tokenData.volume_1m)} `);
-  arr.push(`Buy: ${tokenData.buys_1m}/${formatNumber(tokenData.buy_volume_1m)} `);
-  arr.push(`Sell: ${tokenData.sells_1m}/${formatNumber(tokenData.sell_volume_1m)}`);
-  arr.push(`Net Buy: ${tokenData.sells_1m}/${formatNumber(tokenData.sell_volume_1m)}`);
+  arr.push(
+    `Buy: ${tokenData.buys_1m}/${formatNumber(tokenData.buy_volume_1m)} `
+  );
+  arr.push(
+    `Sell: ${tokenData.sells_1m}/${formatNumber(tokenData.sell_volume_1m)}`
+  );
+  arr.push(
+    `Net Buy: ${tokenData.sells_1m}/${formatNumber(tokenData.sell_volume_1m)}`
+  );
 
-  arr.push('====== 5M ======');
+  arr.push("====== 5M ======");
   arr.push(`Volumn: ${formatNumber(tokenData.volume_5m)} `);
-  arr.push(`Buy: ${tokenData.buys_5m}/${formatNumber(tokenData.buy_volume_5m)} `);
-  arr.push(`Sell: ${tokenData.sells_5m}/${formatNumber(tokenData.sell_volume_5m)}`);
-  arr.push(`Net Buy: ${tokenData.sells_5m}/${formatNumber(tokenData.sell_volume_5m)}`);
+  arr.push(
+    `Buy: ${tokenData.buys_5m}/${formatNumber(tokenData.buy_volume_5m)} `
+  );
+  arr.push(
+    `Sell: ${tokenData.sells_5m}/${formatNumber(tokenData.sell_volume_5m)}`
+  );
+  arr.push(
+    `Net Buy: ${tokenData.sells_5m}/${formatNumber(tokenData.sell_volume_5m)}`
+  );
 
-  arr.push('====== 1H ======');
+  arr.push("====== 1H ======");
   arr.push(`Volumn: ${formatNumber(tokenData.volume_1h)} `);
-  arr.push(`Buy: ${tokenData.buys_1h}/${formatNumber(tokenData.buy_volume_1h)} `);
-  arr.push(`Sell: ${tokenData.sells_1h}/${formatNumber(tokenData.sell_volume_1h)}`);
-  arr.push(`Net Buy: ${tokenData.sells_1h}/${formatNumber(tokenData.sell_volume_1h)}`);
+  arr.push(
+    `Buy: ${tokenData.buys_1h}/${formatNumber(tokenData.buy_volume_1h)} `
+  );
+  arr.push(
+    `Sell: ${tokenData.sells_1h}/${formatNumber(tokenData.sell_volume_1h)}`
+  );
+  arr.push(
+    `Net Buy: ${tokenData.sells_1h}/${formatNumber(tokenData.sell_volume_1h)}`
+  );
 
-  arr.push('====== 24H ======');
+  arr.push("====== 24H ======");
   arr.push(`Volumn: ${formatNumber(tokenData.volume_24h)} `);
-  arr.push(`Buy: ${tokenData.buys_24h}/${formatNumber(tokenData.buy_volume_24h)} `);
-  arr.push(`Sell: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`);
-  arr.push(`Net Buy: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`);
+  arr.push(
+    `Buy: ${tokenData.buys_24h}/${formatNumber(tokenData.buy_volume_24h)} `
+  );
+  arr.push(
+    `Sell: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`
+  );
+  arr.push(
+    `Net Buy: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`
+  );
 
   arr.push("\n");
-  arr.push(`====== ${dayjs().format("YYYY-MM-DD HH:mm:ss")} ======`);
+  arr.push(`== ${dayjs().format("YYYY-MM-DD HH:mm:ss")} ==`);
 
   return arr.join("\n");
 };
@@ -332,29 +361,80 @@ const formatNumber = (value) => {
   }
 };
 
+const getTokenInfo = async (ca) => {
+  let data = await fetchDataByPuppeteer(msg);
+  let tokenInfo = null;
+  if (data) {
+    if (data && data.pageProps && data.pageProps.tokenInfo) {
+      tokenInfo = data.pageProps.tokenInfo;
+    }
+  }
+  return tokenInfo;
+};
+
 const handleSolanaMessage = async (msg) => {
   console.log("获取gmgn数据", msg);
   if (isValidSolanaAddress(msg)) {
-    let data = await fetchDataByPuppeteer(msg);
+    // let data = await fetchDataByPuppeteer(msg);
+    let [data, data2] = await Promise.all([
+      fetchDataByPuppeteer(msg),
+      fetchHotList(msg),
+    ]);
     let tokenInfo = null;
     if (data) {
       if (data && data.pageProps && data.pageProps.tokenInfo) {
         tokenInfo = data.pageProps.tokenInfo;
       }
     }
+
     if (tokenInfo) {
+      if (data2 && data2.data && data2.data.length) {
+        let hot = data2.data[0];
+        tokenInfo.groupCount = hot["群数"] + 1;
+        tokenInfo.queryCount = hot["次数"] + 1;
+      }
       let str = parseTokenData(tokenInfo);
       console.log("===========");
       console.log(str);
       return str;
     }
+    
   }
   return null;
 };
 
-// handleSolanaMessage("DLHNY1ViRpqvGy1GrusEt19YXyPqMSUSVpGiS557pump");
+const fetchHotList = async (ca, token = "") => {
+  const url = `http://suoluosi.net/blockchain/getHotlist?page=1&limit=30&ca=${ca}&token=${token}`;
 
-// fetchTokenHolderByPuppeteer('DLHNY1ViRpqvGy1GrusEt19YXyPqMSUSVpGiS557pump');
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Accept: "application/json, text/javascript, */*; q=0.01",
+        "Accept-Language": "en,zh-CN;q=0.9,zh-TW;q=0.8,zh;q=0.7",
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+        "Proxy-Connection": "keep-alive",
+        Referer: "http://suoluosi.net/blockchain/pump_hot.html",
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      httpsAgent: new https.Agent({ rejectUnauthorized: false }), // 允许不安全的证书
+    });
+
+    console.log(response.data); // 输出获取的结果
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  return null;
+};
+
+handleSolanaMessage("DLHNY1ViRpqvGy1GrusEt19YXyPqMSUSVpGiS557pump");
+
+// fetchDataByPuppeteer('DLHNY1ViRpqvGy1GrusEt19YXyPqMSUSVpGiS557pump');
+
+// fetchHotList("DLHNY1ViRpqvGy1GrusEt19YXyPqMSUSVpGiS557pump", "");
 
 export {
   isValidSolanaAddress,
