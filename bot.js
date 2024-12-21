@@ -47,11 +47,14 @@ async function onMessage(msg) {
     await msg.say("dong");
   }
   let text = msg.text();
-  let replyText = await handleSolanaMessage(text);
-  if (replyText) {
-    await msg.say(replyText);
-    // db.addQueryCount(text);
-    
+  try {
+    let replyText = await handleSolanaMessage(text);
+    if (replyText) {
+      await msg.say(replyText);
+      // db.addQueryCount(text);
+    }
+  } catch (error) {
+    console.log(error);
   }
 }
 
