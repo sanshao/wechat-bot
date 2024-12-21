@@ -355,10 +355,10 @@ const parseTokenData = (tokenData) => {
   // );
   arr.push("\n");
   arr.push(
-    `📈查看K线: https://gmgn.ai/sol/token/FXi8XcLL_${tokenData.address}`
+    `📈查看K线: gmgn.ai/sol/token/FXi8XcLL_${tokenData.address}`
   );
   arr.push(
-    `🔰DEV发币记录: https://pump.fun/profile/${tokenData.creator_address}`
+    `🔰DEV发币记录: pump.fun/profile/${tokenData.creator_address}`
   );
   arr.push("\n");
   arr.push(
