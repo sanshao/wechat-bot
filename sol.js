@@ -267,7 +267,7 @@ const parseTokenData = (tokenData) => {
   // arr.push(`FDV: ${formatNumber(tokenData.fdv)}`);
   // arr.push("\n");
   arr.push(
-    `🎅持有人: ${tokenData.holder_count} ${
+    `👥持有人: ${tokenData.holder_count} ${
       tokenData.insider_percentage
         ? `(🐭老鼠仓${new BigNumber(tokenData.insider_percentage)
             .times(100)
@@ -280,13 +280,13 @@ const parseTokenData = (tokenData) => {
       tokenData.groupCount ? `(${tokenData.groupCount}个群)` : ""
     } ${tokenData.queryCount ? `(${tokenData.queryCount}次查询)` : ""}`
   );
-  arr.push(`👶Dev持仓: ${formatNumber(tokenData.creator_token_balance)}`);
+  arr.push(`👶Dev持仓量: ${formatNumber(tokenData.creator_token_balance)}`);
   arr.push(
     `🐋Top10持仓: ${new BigNumber(tokenData.top_10_holder_rate)
       .times(100)
       .toFixed(2)}%`
   );
-  arr.push(`🛁池子: ${formatNumber(tokenData.liquidity)}`);
+  arr.push(`💧池子: ${formatNumber(tokenData.liquidity)}`);
 
   arr.push(`💵1H成交额: ${formatNumber(tokenData.volume_5m)} `);
   arr.push(`💸24H成交额: ${formatNumber(tokenData.volume_24h)} `);
@@ -360,9 +360,14 @@ const parseTokenData = (tokenData) => {
   // arr.push(
   //   `🔰DEV发币记录: pump.fun/profile/${tokenData.creator_address}`
   // );
-  arr.push("\n");
+  // arr.push("\n");
   arr.push(
     `⌚️查询时间: ${dayjs().tz("Asia/Shanghai").format("YY-MM-DD HH:mm:ss")}`
+  );
+
+  // arr.push("\n");
+  arr.push(
+    `金狗工具详询推特@Cryptoxiaodd`
   );
 
   return arr.join("\n").replace(/\n\n/g, "\n");
