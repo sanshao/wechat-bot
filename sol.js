@@ -353,13 +353,13 @@ const parseTokenData = (tokenData) => {
   // arr.push(
   //   `Net Buy: ${tokenData.sells_24h}/${formatNumber(tokenData.sell_volume_24h)}`
   // );
-  arr.push("\n");
-  arr.push(
-    `📈查看K线: gmgn.ai/sol/token/FXi8XcLL_${tokenData.address}`
-  );
-  arr.push(
-    `🔰DEV发币记录: pump.fun/profile/${tokenData.creator_address}`
-  );
+  // arr.push("\n");
+  // arr.push(
+  //   `📈查看K线: gmgn.ai/sol/token/FXi8XcLL_${tokenData.address}`
+  // );
+  // arr.push(
+  //   `🔰DEV发币记录: pump.fun/profile/${tokenData.creator_address}`
+  // );
   arr.push("\n");
   arr.push(
     `⌚️查询时间: ${dayjs().tz("Asia/Shanghai").format("YY-MM-DD HH:mm:ss")}`
