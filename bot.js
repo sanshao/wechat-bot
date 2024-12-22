@@ -20,7 +20,7 @@ function onScan(qrcode, status) {
     ].join("");
     console.info(
       "StarterBot",
-      "onScan: %s(%s) - %s",
+      "onScan:",
       ScanStatus[status],
       status,
       qrcodeImageUrl
@@ -28,16 +28,16 @@ function onScan(qrcode, status) {
 
     qrcodeTerminal.generate(qrcode, { small: true }); // show qrcode on console
   } else {
-    console.info("StarterBot", "onScan: %s(%s)", ScanStatus[status], status);
+    console.info("StarterBot", "onScan:", ScanStatus[status], status);
   }
 }
 
 function onLogin(user) {
-  console.info("StarterBot", "%s login", user);
+  console.info("StarterBot", "login", user);
 }
 
 function onLogout(user) {
-  console.info("StarterBot", "%s logout", user);
+  console.info("StarterBot", "logout", user);
 }
 
 async function onMessage(msg) {
@@ -58,10 +58,16 @@ async function onMessage(msg) {
   }
 }
 
-const wechaty = WechatyBuilder.build(); // get a Wechaty instance
-wechaty.on("scan", onScan).on("login", onLogin).on("message", onMessage);
+function main() {
+  const wechaty = WechatyBuilder.build({
+    name: "wechat-solana",
+  }); // get a Wechaty instance
+  wechaty.on("scan", onScan).on("login", onLogin).on("message", onMessage);
 
-wechaty
-  .start()
-  .then(() => console.info("StarterBot", "Starter Bot Started."))
-  .catch((e) => console.error("StarterBot", e));
+  wechaty
+    .start()
+    .then(() => console.info("StarterBot", "Starter Bot Started."))
+    .catch((e) => console.error("StarterBot", e));
+}
+
+main();
