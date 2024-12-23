@@ -469,7 +469,7 @@ const handleSolanaMessage = async (msg) => {
       getLaunchpad(msg),
     ]);
 
-    if (tokenInfo) {
+    if (tokenInfo && tokenInfo.symbol) {
       if (data2 && data2.data && data2.data.length) {
         let hot = data2.data[0];
         tokenInfo.groupCount = hot["群数"] + 1;
